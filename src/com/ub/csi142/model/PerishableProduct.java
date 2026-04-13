@@ -4,7 +4,7 @@ package com.ub.csi142.model;
     private String expiryDate;
 
 //Constructor
-public PerishableProduct(String name, String productID, int quantity, int price, String expiryDate){
+public PerishableProduct(String name, String productID, int quantity, double price, String expiryDate){
     super(name, productID, quantity, price); 
     this.expiryDate=expiryDate;   
 }
