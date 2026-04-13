@@ -4,11 +4,11 @@ public abstract class Product{
     private String name;
     private String productID;
     private int quantity;
-    private int price;
+    private double price;
 
 // Constructor 
 
-public Product(String name, String productID, int quantity, int price){
+public Product(String name, String productID, int quantity, double price){
     this.name=name;
     this.productID=productID;
     this.quantity=quantity;
@@ -47,7 +47,7 @@ public void setQuantity(int quantity){
     this.quantity=quantity;
 }
 
-public void setPrice(int price){
+public void setPrice(double price){
     this.price=price;
 }
 
