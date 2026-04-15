@@ -1,0 +1,57 @@
+GROUP24-CSI142-GroupProject
+|
+|
+|--src
+|   |____com
+|	  |____ub
+|		|_____csi142
+|			|	
+|			|____app
+|			|	|
+|			|	|____Main.java
+|			|
+|			|
+|			|____contracts
+|			|	|
+|			|	|____Reportable.java
+|			|
+|			|
+|			|____model
+|			|	|
+|			|	|___NonperishableProduct.java
+|			|	|
+|			|	|___PerishableProduct.java
+|			|	|
+|			|	|___Product.java
+|			|	|
+|			|	|___Sale.java
+|			|	|
+|			|	|___SaleItem.java
+|			|
+|			|
+|			|
+|			|____services
+|			|	|
+|			|	|___Inventory.java
+|			|	|
+|			|	|___SalesManager.java
+|			|
+|			|
+|			|	
+|			|___util
+|			|	|
+|			|	|____InputHelper.java
+|			|	
+|
+|
+|
+|_____README.md
+
+
+BW4E3E208E
+
+
+
+
+
+
