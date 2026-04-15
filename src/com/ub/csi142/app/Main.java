@@ -1,6 +1,7 @@
 package com.ub.csi142.app;
 // Main class to run the Tuckshop System
-//
+//more imports statements for the classes we will be using
+//this is menu only more code to be added to the Main.java
 public class public class Main{
     public static void main(String[] args) {//cant this be done as a single code for submission?.
         Inventory inventory = new Inventory();
