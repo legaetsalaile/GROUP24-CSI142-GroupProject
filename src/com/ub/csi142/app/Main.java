@@ -2,7 +2,7 @@ package com.ub.csi142.app;
 
 import com.ub.csi142.service.Inventory;
 import com.ub.csi142.service.SalesManager;
-import com.ub.csi142.util.InputHelper;;
+import com.ub.csi142.util.InputHelper;
 
 public class Main{
 
@@ -54,9 +54,4 @@ public class Main{
 
     }
 }
-}
-
-
-    
-
 }
