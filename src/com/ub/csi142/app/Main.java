@@ -7,6 +7,7 @@ public class Main {
         SalesManager salesManager = new SalesManager();
 
         int choice;
+        int select;
 
         do {
             System.out.println("\n====== PRODUCT & SALES SYSTEM ======");
