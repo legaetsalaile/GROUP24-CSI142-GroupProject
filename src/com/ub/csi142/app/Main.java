@@ -1,13 +1,15 @@
 package com.ub.csi142.app;
 
+import com.ub.csi142.service.Inventory;
+import com.ub.csi142.service.SalesManager;
+import com.ub.csi142.util.InputHelper;
+
 public class Main{
-    //addition info to be added
-    //menu loop below , all its concepts
-public class MenuLoop{
     public static void main(String[]args){
-        Invertory invertory = new Invertory();
+
+        Inventory inventory = new Inventory();
         SalesManager salesManager = new SalesManager();
-        Input input = new Input();
+        InputHelper input = new InputHelper();
         System.out.println("=========================================");
         System.out.println("   Welcome to the 24th Tuckshop System ");
         System.out.println("=========================================");
@@ -48,10 +50,7 @@ public class MenuLoop{
                 System.out.println("Invalid choice. Please enter a valid option from 1-6.");
         }
         }
+        input.closeScanner();
     }
 }
                 
-                
-        
-    
-}

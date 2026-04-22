@@ -3,7 +3,6 @@ package com.ub.csi142.util;
 import java.util.Scanner;
 
 public class InputHelper{
-<<<<<<< HEAD
 private Scanner scanner;
 
 public InputHelper(){
@@ -49,12 +48,5 @@ public int getInt(String prompt){
 public void closeScanner(){
     scanner.close();
 }
-=======
-private Scanner scanner= new Scanner(System.in);
-
-public int getInt(String prompt){
-    System.out.println(prompt);
-    return scanner.nextInt();
->>>>>>> origin/main
 }
     
