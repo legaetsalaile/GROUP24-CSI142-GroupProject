@@ -1,19 +1,20 @@
 package com.ub.csi142.model;
 
-public class NonperishableProduct{
-    public NonPerishableProduct(String name, String productID, Int quantity,Double price,){
-        super(name,productID,quantity,price,expiryDate);
+public class NonPerishableProduct{
+    public NonperishableProduct(String name ,String Productcode,int quantity,double price){
+        super(name ,productCode,quantity,price);
+
+    @Override
+    Public boolean isperishable(){
+        return false;
+        { 
+
+    System.out.println("ProductName;:"+getName());
+    System.out.println("Productcode;:"+ getProductcode());
+    System.out.println("Quantity;"+ getQuantity());
+    System.out.println("Price:"+ getprice());
+        }
     }
-
-    @Override
-    public boolean isperishable(){    
-    return false;
+    }
 }
-
-    @Override
-    System.out.println("Non-perishable Product:"+ getName());
-    System.out.println("ProductID:"+ getProductID());
-    System.out.println("Quantity:"+ getquantity());
-    System.out.println("Price:"getprice());
-    
-}
+   
