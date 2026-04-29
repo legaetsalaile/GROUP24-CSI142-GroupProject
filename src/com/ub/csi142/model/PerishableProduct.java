@@ -1,6 +1,5 @@
 package com.ub.csi142.model;
 
-
 import java.time.LocalDate;
 
  public class PerishableProduct extends Product {
@@ -47,4 +46,3 @@ if (isExpired()){
     System.out.println("Status  Fresh");
 }
 }
- }
