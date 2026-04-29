@@ -1,9 +1,12 @@
 package com.ub.csi142.app;
 
+import com.ub.csi142.service.Inventory;
+import com.ub.csi142.service.SalesManager;
+import com.ub.csi142.util.InputHelper;
+
 public class Main{
     //addition info to be added
     //menu loop below , all its concepts
-public class MenuLoop{
     public static void main(String[]args){
         Invertory invertory = new Invertory();
         SalesManager salesManager = new SalesManager();
@@ -12,7 +15,7 @@ public class MenuLoop{
         System.out.println("   Welcome to the 24th Tuckshop System ");
         System.out.println("=========================================");
         
-    boolean running = true;
+     boolean running = true;
         while(running){
             System.out.println("++-------MAIN MENU-------++");
             System.out.println(" 1. Add Product to Invertory ");
@@ -26,16 +29,16 @@ public class MenuLoop{
             int choice = input.getInt("Enter your choice: ");
         switch (choice){
             case 1:
-                inventory.addProduct();
+                Inventory.addProduct();
                 break;
             case 2:
-                salesManager.recordSale(inventory);
+                salesManager.recordSale(Inventory);
                 break;
             case 3:
-                inventory.viewStock();
+                Inventory.viewStock();
                 break;
             case 4:
-                inventory.searchProduct();
+                Inventory.searchProduct();
                 break;
             case 5:
                 salesManager.viewSalesReport();
@@ -48,10 +51,8 @@ public class MenuLoop{
                 System.out.println("Invalid choice. Please enter a valid option from 1-6.");
         }
         }
-    }
-}
-                
+                    
                 
         
-    
+    }
 }

@@ -1,6 +1,9 @@
 package com.ub.csi142.service;
 import com.ub.csi142.contracts.Reportable;
 import java.util.ArrayList;
+import com.ub.csi142.model.Sale;
+import com.ub.csi142.model.SaleItem;
+import com.ub.csi142.service.Inventory;
 
 public class SalesManager implements Reportable{
     private ArrayList<SaleItem> saleItems;
@@ -10,12 +13,12 @@ public class SalesManager implements Reportable{
     }
     //record sale method will take inventory as parameter to check if the product is available and then record the sale
     public void recordSale(Inventory inventory){
-       saleItems.add(sale);
+       saleItems.add(SecurityManagerale);
        System.out.println("Record sale");
     }
 
     public void viewSalesReport(){
-        if (sales.isEmpty()){
+        if (Sales.isEmpty()){
             System.out.println("No sales recorded.");
             return;
         }
