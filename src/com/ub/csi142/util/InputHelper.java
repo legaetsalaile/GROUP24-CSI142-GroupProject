@@ -3,42 +3,47 @@ package com.ub.csi142.util;
 import java.util.Scanner;
 
 public class InputHelper {
-    private final Scanner scanner;
+   private final Scanner scanner;
 
-    public InputHelper() {
-        this.scanner = new Scanner(System.in);
-    }
+   public InputHelper() {
+      this.scanner = new Scanner(System.in);
+   }
 
-    public int getInt(String prompt) {
-        System.out.print(prompt);
-        while (!scanner.hasNextInt()) {
-            scanner.next();
-            System.out.print("Please enter a valid number: ");
-        }
-        int value = scanner.nextInt();
-        scanner.nextLine();
-        return value;
-    }
+   public int getInt(String var1) {
+      System.out.print(var1);
 
-    public double getDouble(String prompt) {
-        System.out.print(prompt);
-        while (!scanner.hasNextDouble()) {
-            scanner.next();
-            System.out.print("Please enter a valid number: ");
-        }
-        double value = scanner.nextDouble();
-        scanner.nextLine();
-        return value;
-    }
+      while(!this.scanner.hasNextInt()) {
+         this.scanner.next();
+         System.out.print("Please enter a valid number: ");
+      }
 
-    public String getString(String prompt) {
-        System.out.print(prompt);
-        return scanner.nextLine().trim();
-    }
+      int var2 = this.scanner.nextInt();
+      this.scanner.nextLine();
+      return var2;
+   }
 
-    public void closeScanner() {
-        if (scanner != null) {
-            scanner.close();
-        }
-    }
+   public double getDouble(String var1) {
+      System.out.print(var1);
+
+      while(!this.scanner.hasNextDouble()) {
+         this.scanner.next();
+         System.out.print("Please enter a valid number: ");
+      }
+
+      double var2 = this.scanner.nextDouble();
+      this.scanner.nextLine();
+      return var2;
+   }
+
+   public String getString(String var1) {
+      System.out.print(var1);
+      return this.scanner.nextLine().trim();
+   }
+
+   public void closeScanner() {
+      if (this.scanner != null) {
+         this.scanner.close();
+      }
+
+   }
 }
