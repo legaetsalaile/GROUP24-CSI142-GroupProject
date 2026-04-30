@@ -1,58 +1,94 @@
 package com.ub.csi142.service;
+
 import java.util.ArrayList;
 import java.util.List;
+import com.ub.csi142.contracts.Reportable;
+import com.ub.csi142.model.Product;
 
-public class Inventory implements Reportable{
-    private List<Product>product;
-    public Inventory(){
-        this.product = new ArrayList<>();
-         
+public class Inventory implements Reportable {
+    private final List<Product> products;
+
+    public Inventory() {
+        this.products = new ArrayList<>();
     }
-    public void addProduct(Product product){
-        this.product.add(product);
+
+    public void addProduct(Product product) {
+        if (product == null) {
+            throw new IllegalArgumentException("Product cannot be null");
+        }
+        this.products.add(product);
         System.out.println("Successfully added: " + product.getName());
     }
-    public void searchProduct(String productID){//or ke String name
-        System.out.println("Search for a product by name:");
-        String searchName = System.console().readLine();
+
+    public void searchProduct(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            System.out.println("Please provide a valid product name.");
+            return;
+        }
         boolean found = false;
-        for(Product product : product){
-            if(product.getName().equalsIgnoreCase(productID)){// is it productID or product name?
-                System.out.println("Product found: " + product.getName() + " -P" + product.getPrice());
+        for (Product product : products) {
+            if (product.getName().equalsIgnoreCase(name) || product.getProductID().equalsIgnoreCase(name)) {
+                System.out.println("Product found:");
+                product.display();
                 found = true;
                 break;
             }
         }
-        if(!found){
+        if (!found) {
+            System.out.println("Product not found: " + name);
+        }
+    }
+
+    public Product findProductByName(String name) {
+        if (name == null) {
+            return null;
+        }
+        for (Product product : products) {
+            if (product.getName().equalsIgnoreCase(name) || product.getProductID().equalsIgnoreCase(name)) {
+                return product;
+            }
+        }
+        return null;
+    }
+
+    public void updateProduct(String productID, double newPrice) {
+        Product product = findProductByName(productID);
+        if (product == null) {
             System.out.println("Product not found: " + productID);
+            return;
         }
-        public void updateProduct(String productID, double newPrice){
-            for(Product product : product){
-                if(product.getName().equalsIgnoreCase(productID)){
-                    product.setPrice(newPrice);
-                    System.out.println("Product updated: " + product.getName() + " -P" + product.getPrice());
-                    return;
-                }else{
-                    System.out.println("Error!! Product" + product.getName() + " not found" );
-                }
+        product.setPrice(newPrice);
+        System.out.println("Product updated: " + product.getName() + " - P" + product.getPrice());
+    }
+
+    public void viewStock() {
+        if (products.isEmpty()) {
+            System.out.println("Inventory is empty.");
+            return;
+        }
+        System.out.println("Current Stock:");
+        for (Product product : products) {
+            product.display();
+            System.out.println("---");
+        }
+    }
+
+    @Override
+    public void generateReport() {
+        System.out.println("===============================");
+        System.out.println("  Inventory Stock Report ");
+        System.out.println("===============================");
+        if (products.isEmpty()) {
+            System.out.println("No products in the inventory.");
+        } else {
+            for (Product product : products) {
+                System.out.println("Product: " + product.getName() + " - Price: P" + product.getPrice() + " - Quantity: " + product.getQuantity());
             }
         }
-        @Override
-        public void generateReport() {
-            System.out.println("===============================");
-            System.out.println("  Inventory Stock Report ");
-            System.out.println("===============================");
-            if(product.isEmpty()){
-                System.out.println("No products in the inventory.");
-            } else {
-                for(Product product : product){
-                    System.out.println("Product: " + product.getName() + " - Price: P" + product.getPrice() + " - Quantity: " + product.getQuantity() ););
-                }
-            }
-            System.out.println("===============================");
-        }
-        public List<Product> getProducts(){
-            return product;
-        }
+        System.out.println("===============================");
+    }
+
+    public List<Product> getProducts() {
+        return new ArrayList<>(products);
     }
 }
