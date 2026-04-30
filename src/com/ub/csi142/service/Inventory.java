@@ -2,105 +2,72 @@ package com.ub.csi142.service;
 
 import com.ub.csi142.contracts.Reportable;
 import com.ub.csi142.model.Product;
-import java.io.PrintStream;
+import com.ub.csi142.model.Sale;
+import com.ub.csi142.model.SaleItem;
+import com.ub.csi142.util.InputHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inventory implements Reportable {
-   private final List<Product> products = new ArrayList<Product>();
+public class SalesManager implements Reportable {
+   private final List<Sale> sales = new ArrayList<Sale>();
 
-   public Inventory() {
+   public SalesManager() {
    }
 
-   public void addProduct(Product var1) {
-      if (var1 == null) {
-         throw new IllegalArgumentException("Product cannot be null");
-      } else {
-         this.products.add(var1);
-         System.out.println("Successfully added: " + var1.getName());
-      }
-   }
-
-   public void searchProduct(String var1) {
-      if (var1 != null && !var1.trim().isEmpty()) {
-         boolean var2 = false;
-
-         for(Product var4 : this.products) {
-            if (var4.getName().equalsIgnoreCase(var1) || var4.getProductID().equalsIgnoreCase(var1)) {
-               System.out.println("Product found:");
-               var4.display();
-               var2 = true;
-               break;
+   public void recordSale(Inventory var1, InputHelper var2) {
+      if (var1 != null && var2 != null) {
+         if (var1.getProducts().isEmpty()) {
+            System.out.println("No products available to sell.");
+         } else {
+            String var3 = var2.getString("Enter product name or ID: ");
+            Product var4 = var1.findProductByName(var3);
+            if (var4 == null) {
+               System.out.println("Product not found: " + var3);
+            } else {
+               int var5 = var2.getInt("Enter quantity to sell: ");
+               if (var5 <= 0) {
+                  System.out.println("Quantity must be greater than zero.");
+               } else if (var5 > var4.getQuantity()) {
+                  System.out.println("Not enough stock. Available: " + var4.getQuantity());
+               } else {
+                  var4.reduceStock(var5);
+                  Sale var6 = new Sale();
+                  var6.addSaleItem(new SaleItem(var4, var5));
+                  this.sales.add(var6);
+                  var6.printReceipt();
+               }
             }
          }
-
-         if (!var2) {
-            System.out.println("Product not found: " + var1);
-         }
-
       } else {
-         System.out.println("Please provide a valid product name.");
+         System.out.println("Sales cannot be recorded because inventory or input helper is missing.");
       }
    }
 
-   public Product findProductByName(String var1) {
-      if (var1 == null) {
-         return null;
+   public void viewSalesReport() {
+      if (this.sales.isEmpty()) {
+         System.out.println("No sales recorded.");
       } else {
-         for(Product var3 : this.products) {
-            if (var3.getName().equalsIgnoreCase(var1) || var3.getProductID().equalsIgnoreCase(var1)) {
-               return var3;
-            }
-         }
+         System.out.println("View Sales Report");
 
-         return null;
-      }
-   }
-
-   public void updateProduct(String var1, double var2) {
-      Product var4 = this.findProductByName(var1);
-      if (var4 == null) {
-         System.out.println("Product not found: " + var1);
-      } else {
-         var4.setPrice(var2);
-         PrintStream var10000 = System.out;
-         String var10001 = var4.getName();
-         var10000.println("Product updated: " + var10001 + " - P" + var4.getPrice());
-      }
-   }
-
-   public void viewStock() {
-      if (this.products.isEmpty()) {
-         System.out.println("Inventory is empty.");
-      } else {
-         System.out.println("Current Stock:");
-
-         for(Product var2 : this.products) {
-            var2.display();
-            System.out.println("---");
+         for(Sale var2 : this.sales) {
+            System.out.println(var2);
+            System.out.println("------------------------------");
          }
 
       }
    }
 
    public void generateReport() {
-      System.out.println("===============================");
-      System.out.println("  Inventory Stock Report ");
-      System.out.println("===============================");
-      if (this.products.isEmpty()) {
-         System.out.println("No products in the inventory.");
-      } else {
-         for(Product var2 : this.products) {
-            PrintStream var10000 = System.out;
-            String var10001 = var2.getName();
-            var10000.println("Product: " + var10001 + " - Price: P" + var2.getPrice() + " - Quantity: " + var2.getQuantity());
-         }
+      double var1 = (double)0.0F;
+
+      for(Sale var4 : this.sales) {
+         var1 += var4.getTotalAmount();
       }
 
       System.out.println("===============================");
-   }
-
-   public List<Product> getProducts() {
-      return new ArrayList<Product>(this.products);
+      System.out.println("  Sales Report ");
+      System.out.println("===============================");
+      System.out.println("Total Sales: " + this.sales.size());
+      System.out.println("Total Revenue: P" + var1);
    }
 }

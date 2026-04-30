@@ -1,6 +1,7 @@
 package com.ub.csi142.service;
 
 import com.ub.csi142.contracts.Reportable;
+import com.ub.csi142.model.Inventory;
 import com.ub.csi142.model.Product;
 import com.ub.csi142.model.Sale;
 import com.ub.csi142.model.SaleItem;
@@ -14,43 +15,58 @@ public class SalesManager implements Reportable {
    public SalesManager() {
    }
 
-   public void recordSale(Inventory var1, InputHelper var2) {
-      if (var1 != null && var2 != null) {
-         if (var1.getProducts().isEmpty()) {
+   public void recordSale(Inventory inventory, InputHelper inputHelper) {
+      if (inventory == null || inputHelper == null) {
+
+         if (inventory.getProducts().isEmpty()) {
             System.out.println("No products available to sell.");
-         } else {
-            String var3 = var2.getString("Enter product name or ID: ");
-            Product var4 = var1.findProductByName(var3);
-            if (var4 == null) {
-               System.out.println("Product not found: " + var3);
-            } else {
-               int var5 = var2.getInt("Enter quantity to sell: ");
-               if (var5 <= 0) {
-                  System.out.println("Quantity must be greater than zero.");
-               } else if (var5 > var4.getQuantity()) {
-                  System.out.println("Not enough stock. Available: " + var4.getQuantity());
-               } else {
-                  var4.reduceStock(var5);
-                  Sale var6 = new Sale();
-                  var6.addSaleItem(new SaleItem(var4, var5));
-                  this.sales.add(var6);
-                  var6.printReceipt();
-               }
-            }
+            return;
          }
-      } else {
-         System.out.println("Sales cannot be recorded because inventory or input helper is missing.");
+
+         String product Name = inputHelper.getString("Enter product name or ID: ");
+            Product product = inventory.findProductByName(productName);
+
+            if (inventory == null) {
+               System.out.println("Product not found: " + productName);
+               return;
+            }
+
+            int quantity = inputHelper.getInt("Enter quantity to sell");
+
+            if (quantity <= 0) {
+                 System.out.println("Quantity must be greater than zero.");
+                 return;
+            }
+
+            if (quantity > product.getQuantity()) {
+                  System.out.println("Not enough stock. Available: " + product.getQuantity());
+                  return;
+            }
+
+            product.reduceStock(quantity);
+
+            Sale sale = new Sale();
+            sale.addSaleItem(new SaleItem(product, quantity));
+            sales.add(sale);
+
+            sale.printReceipt();
+
+         } else {
+             System.out.println("Sales cannot be recorded because inventory or input helper is missing.");
+         }
       }
-   }
 
    public void viewSalesReport() {
+
       if (this.sales.isEmpty()) {
          System.out.println("No sales recorded.");
-      } else {
-         System.out.println("View Sales Report");
+         return;
+      }
 
-         for(Sale var2 : this.sales) {
-            System.out.println(var2);
+      System.out.println("View Sales Report");
+
+         for(Sale sale : sales) {
+            System.out.println(sale);
             System.out.println("------------------------------");
          }
 
@@ -58,16 +74,15 @@ public class SalesManager implements Reportable {
    }
 
    public void generateReport() {
-      double var1 = (double)0.0F;
+      double totalRevenue = 0.0;
 
-      for(Sale var4 : this.sales) {
-         var1 += var4.getTotalAmount();
+      for(Sale sale : this.sales) {
+         totalRevenue += sale.getTotalAmount();
       }
 
       System.out.println("===============================");
       System.out.println("  Sales Report ");
       System.out.println("===============================");
       System.out.println("Total Sales: " + this.sales.size());
-      System.out.println("Total Revenue: P" + var1);
+      System.out.println("Total Revenue: P" + totalRevenue);
    }
-}
