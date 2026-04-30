@@ -12,17 +12,18 @@ public class Main {
    }
 
    public static void main(String[] var0) {
-      Inventory var1 = new Inventory();
-      SalesManager var2 = new SalesManager();
-      InputHelper var3 = new InputHelper();
-      var1.addProduct(new PerishableProduct("Milk", "P001", 10, (double)5.0F, LocalDate.now().plusDays(7L)));
-      var1.addProduct(new NonperishableProduct("Rice", "NP001", 20, (double)10.0F, 12));
+      Inventory inventory = new Inventory();
+      SalesManager salesManager = new SalesManager();
+      InputHelper input = new InputHelper();
+
+
+      
       System.out.println("=========================================");
       System.out.println("   Welcome to the 24th Tuckshop System ");
       System.out.println("=========================================");
-      boolean var4 = true;
+      boolean running = true;
 
-      while(var4) {
+      while(running) {
          System.out.println("++-------MAIN MENU-------++");
          System.out.println(" 1. Add Product to Inventory ");
          System.out.println(" 2. Record a Sale");
@@ -32,47 +33,52 @@ public class Main {
          System.out.println(" 6. Generate Inventory Report ");
          System.out.println(" 7. Exit ");
          System.out.println("++------------------------++");
-         int var5 = var3.getInt("Enter your choice: ");
-         switch (var5) {
+
+
+         int choice = input.getInt("Enter your choice: ");
+         switch (choice) {
             case 1:
-               String var6 = var3.getString("Enter product type (perishable/non-perishable): ");
-               String var7 = var3.getString("Name: ");
-               String var8 = var3.getString("ID: ");
-               int var9 = var3.getInt("Quantity: ");
-               double var10 = var3.getDouble("Price: ");
-               if (var6.equalsIgnoreCase("perishable")) {
-                  int var13 = var3.getInt("Days until expiry: ");
-                  var1.addProduct(new PerishableProduct(var7, var8, var9, var10, LocalDate.now().plusDays((long)var13)));
+               String type = input.getString("Enter product type (perishable/non-perishable): ");
+               String name = input.getString("Name: ");
+               String id = input.getString("ID: ");
+               int qty = input.getInt("Quantity: ");
+               double price = input.getDouble("Price: ");
+
+
+               if (type.equalsIgnoreCase("perishable")) {
+                  int days = input.getInt("Days until expiry: ");
+                  inventory.addProduct(new PerishableProduct(name, id, qty, price, LocalDate.now().plusDays((long)days)));
+
                } else {
-                  int var14 = var3.getInt("Shelf life (months): ");
-                  var1.addProduct(new NonperishableProduct(var7, var8, var9, var10, var14));
+                  int shelf = input.getInt("Shelf life (months): ");
+                  inventory.addProduct(new NonperishableProduct(name, id, qty, price, shelf));
                }
                break;
             case 2:
-               var2.recordSale(var1, var3);
+               salesManager.recordSale(inventory, input);
                break;
             case 3:
-               var1.viewStock();
+               inventory.viewStock();
                break;
             case 4:
-               String var12 = var3.getString("Enter product name or ID: ");
-               var1.searchProduct(var12);
+               
+               inventory.searchProduct(input.getString("enter name or id"));
                break;
             case 5:
-               var2.viewSalesReport();
+               salesManager.viewSalesReport();
                break;
             case 6:
-               var1.generateReport();
+               inventory.generateReport();
                break;
             case 7:
                System.out.println("Exiting the system. Thank you and Goodbye!");
-               var4 = false;
+               running = false;
                break;
             default:
                System.out.println("Invalid choice. Please enter a valid option from 1-7.");
          }
       }
 
-      var3.closeScanner();
+      input.closeScanner();
    }
 }
