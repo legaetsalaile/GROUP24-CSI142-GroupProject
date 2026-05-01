@@ -1,0 +1,19 @@
+Main.java - Object Creation, Composition
+
+Inventory.java - Encapsulation, Polymorphism
+
+SalesManager.java - Encapsulation, Composition
+
+Product.java - Abstraction, Encapsulation
+
+PerishableProduct.java - Inheritance, Polymorphism
+
+NonperishableProduct.java - Inheritance, Polymorphism
+
+Sale.java - Encapsulation
+
+SaleItem.java - Encapsulation
+
+InputHelper.java - Encapsulation
+
+Reportable.java - Abstraction (Interface)
