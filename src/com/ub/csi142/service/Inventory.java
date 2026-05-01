@@ -8,6 +8,7 @@ import com.ub.csi142.util.InputHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< HEAD
 public class SalesManager implements Reportable {
    private final List<Sale> sales = new ArrayList<Sale>();
 
@@ -69,5 +70,60 @@ public class SalesManager implements Reportable {
       System.out.println("===============================");
       System.out.println("Total Sales: " + this.sales.size());
       System.out.println("Total Revenue: P" + var1);
+=======
+public class Inventory implements Reportable {
+   private final List<Product> products = new ArrayList<>();
+
+   public void addProduct(Product product){
+      if (product==null){
+         System.out.println("cannot add null");
+         return;
+      }
+      products.add(product);
+      System.out.println("added successfully");
+   }
+   public List<Product>getProducts(){
+      return products;
+   }
+
+   public Product findProductByName(String value){
+
+      for(Product product : products){
+
+         if(product.getName().equalsIgnoreCase(value)||product.getProductID().equalsIgnoreCase(value)){
+            return product;
+         }
+      }
+      return null;
+   }
+
+   public void searchProduct(String value){
+      Product product = findProductByName(value);
+      if(product == null){
+         System.out.println("Product not fund");
+      } else {
+         product.display();
+      }
+   }
+
+   public void viewStock(){
+      if (products.isEmpty()){
+         System.out.println("No products in Stock");
+         return;
+      }
+      for (Product product : products){
+         product.display();
+         System.out.println("");
+      }
+   }
+
+   @Override 
+   public void generateReport(){
+      System.out.println("Inventory Report");
+      for (Product product : products){
+         product.display();
+      }
+      System.out.println("Total Products" + products.size());
+>>>>>>> 29313cd (update (Pako and Legae))
    }
 }

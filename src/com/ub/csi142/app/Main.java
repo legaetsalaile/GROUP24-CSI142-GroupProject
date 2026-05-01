@@ -11,7 +11,8 @@ public class Main {
    public Main() {
    }
 
-   public static void main(String[] var0) {
+   public static void main(String[] args) {
+
       Inventory inventory = new Inventory();
       SalesManager salesManager = new SalesManager();
       InputHelper input = new InputHelper();
@@ -47,7 +48,7 @@ public class Main {
 
                if (type.equalsIgnoreCase("perishable")) {
                   int days = input.getInt("Days until expiry: ");
-                  inventory.addProduct(new PerishableProduct(name, id, qty, price, LocalDate.now().plusDays((long)days)));
+                  inventory.addProduct (new PerishableProduct(name, id, qty, price, LocalDate.now().plusDays(days)));
 
                } else {
                   int shelf = input.getInt("Shelf life (months): ");

@@ -6,15 +6,15 @@ import com.ub.csi142.model.Product;
 import com.ub.csi142.model.Sale;
 import com.ub.csi142.model.SaleItem;
 import com.ub.csi142.util.InputHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class SalesManager implements Reportable {
-   private final List<Sale> sales = new ArrayList<Sale>();
 
-   public SalesManager() {
-   }
+    private final List<Sale> sales = new ArrayList<>();
 
+<<<<<<< HEAD
    public void recordSale(Inventory inventory, InputHelper inputHelper) {
       if (inventory == null || inputHelper == null) {
 
@@ -69,10 +69,24 @@ public class SalesManager implements Reportable {
             System.out.println(sale);
             System.out.println("------------------------------");
          }
+=======
+    public void recordSale(Inventory inventory, InputHelper input) {
 
-      }
-   }
+        if (inventory == null || input == null) {
+            System.out.println("Object missing");
+            return;
+        }
 
+        if (inventory.getProducts().isEmpty()) {
+            System.out.println("No products available");
+            return;
+        }
+>>>>>>> 29313cd (update (Pako and Legae))
+
+        String value = input.getString("Enter product name or ID: ");
+        Product product = inventory.findProductByName(value);
+
+<<<<<<< HEAD
    public void generateReport() {
       double totalRevenue = 0.0;
 
@@ -86,3 +100,56 @@ public class SalesManager implements Reportable {
       System.out.println("Total Sales: " + this.sales.size());
       System.out.println("Total Revenue: P" + totalRevenue);
    }
+=======
+        if (product == null) {
+            System.out.println("Product not found");
+            return;
+        }
+
+        int qty = input.getInt("Enter quantity: ");
+
+        if (qty <= 0) {
+            System.out.println("Invalid qty");
+            return;
+        }
+
+        if (qty > product.getQuantity()) {
+            System.out.println("Insufficient stock");
+            return;
+        }
+
+        product.reduceStock(qty);
+
+        Sale sale = new Sale();
+        sale.addSaleItem(new SaleItem(product, qty));
+        sales.add(sale);
+
+        sale.printReceipt();
+    }
+
+    public void viewSalesReport() {
+        if (sales.isEmpty()) {
+            System.out.println("No sales");
+            return;
+        }
+
+        for (Sale sale : sales) {
+            System.out.println(sale);
+            System.out.println("----------------");
+        }
+    }
+
+    @Override
+    public void generateReport() {
+        double total = 0;
+
+        for (Sale sale : sales) {
+            total += sale.getTotalAmount();
+        }
+
+        System.out.println("Sales Report");
+        System.out.println("Total sales: " + sales.size());
+        System.out.println("Revenue: " + total);
+    }
+}
+>>>>>>> 29313cd (update (Pako and Legae))
